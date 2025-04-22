@@ -1,3 +1,5 @@
+using Emgu.CV;
+using Emgu.CV.Structure;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -7,6 +9,7 @@ namespace ImageProcessingBinarization
 {
     public partial class Form1 : Form
     {
+        Binarizer processor = new Binarizer();
         public Form1()
         {
             InitializeComponent();
@@ -32,23 +35,23 @@ namespace ImageProcessingBinarization
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void BinarizeButton(object sender, EventArgs e)
         {
-            var threshold = 85; //Intensity of color
+            var threshold = 85; //Grænsen for farveintensitet
             Color color;
             Color binarize;
 
             Bitmap bitmap = new Bitmap(OriginalImage.Image); //Image som skal binariseres
-            Graphics graphics = BinarizedImage.CreateGraphics(); //Hvor det skal binariseres
             int h = bitmap.Height;
             int w = bitmap.Width;
 
-            for (int j = 0; j < h; j++) //Tjekker hver pixel i OriginalImage og tager gennemsnittet af intensiteten af deres RBG-farver og gør pixel hhv. hvide og sorte.
+            for (int j = 0; j < h; j++) //Tjekker hver pixel i OriginalImage og tager gennemsnittet af
+                                        //intensiteten af deres RBG-farver og gør pixel hhv. hvide og sorte.
             {
                 for (int i = 0; i < w; i++)
                 {
                     color = bitmap.GetPixel(i, j);
-                    int avg = ColorIntensity(color);
+                    int avg = processor.ColorIntensity(color);
                     if (avg > threshold)
                     {
                         binarize = Color.White;
@@ -74,63 +77,32 @@ namespace ImageProcessingBinarization
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void EdgeDetectButton(object sender, EventArgs e)
         {
-            Bitmap bitmap = new Bitmap(BinarizedImage.Image); //Image til edge detection
-            int h = bitmap.Height;
-            int w = bitmap.Width;
-            List<Color> colors = new List<Color>();
-            for (int j = 0; j < h; j++)
-            {
-                for (int i = 0; i < w; i++)
-                {
-                    colors = AdjPixelColors(i, j, bitmap);
-                    foreach (Color c in colors)
-                    {
-                        if (ColorIntensity(c) < 150 && c.R < 150)
-                        {
-  
-                            bitmap.SetPixel(i,j,Color.Red);
-                            colors.Clear();
-                            break;
-                        }
-                    }
-                    
-                }
-            }
-            EdgeMap.Image = bitmap; //Tilføjer det nye bitmap til BinarizedImage
-        }
-        public List<Color> AdjPixelColors(int x, int y, Bitmap bitmap)
-        {
-            List<Color> colors = new List<Color>();
-            colors.Clear();
-            for (int j = -1; j <= 1; j++)
-            {
-                for (int i = -1; i <= 1; i++)
-                {
-                    int xi = x - i;
-                    int yj = y - i;
-                    if (xi == x && yj == y)
-                    {
-                        Color colorTest = bitmap.GetPixel(xi, yj);
-                        if (ColorIntensity(colorTest) < 150 && colorTest.R > 150) { break; }
-                    }
-                    else if(xi >= 0 && xi < bitmap.Width && yj >= 0 && yj < bitmap.Height)
-                    {
-                        colors.Add(bitmap.GetPixel(xi, yj));
-                    } 
-                }
-            }
-            return colors;
-        }
-        public int ColorIntensity(Color color)
-        {
-            byte r = color.R;
-            byte g = color.G;
-            byte b = color.B;
-            int avg = Convert.ToInt16(r + g + b) / 3;
 
-            return avg;
+            Bitmap bitmap = processor.EdgeDetector(new Bitmap(BinarizedImage.Image));
+            EdgeMap.Image = bitmap; //Tilføjer det nye bitmap til EdgeMap
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            BarcodeDecoder barcodeDetector = new BarcodeDecoder();
+            Bitmap bitmap = new Bitmap(BinarizedImage.Image);
+
+
+            Image<Bgr, float> newImage = bitmap.ToImage<Bgr, float>();
+            newImage = barcodeDetector.SobelFilter(newImage);
+            BarcodeDetect.Image = newImage.AsBitmap<Bgr, float>();
+        }   
     }
 }

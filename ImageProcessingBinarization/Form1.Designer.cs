@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             OriginalImage = new PictureBox();
             BinarizedImage = new PictureBox();
             textBox1 = new TextBox();
@@ -36,15 +37,18 @@
             button2 = new Button();
             EdgeMap = new PictureBox();
             button3 = new Button();
+            button4 = new Button();
+            BarcodeDetect = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)OriginalImage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)BinarizedImage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)EdgeMap).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)BarcodeDetect).BeginInit();
             SuspendLayout();
             // 
             // OriginalImage
             // 
             OriginalImage.BackColor = SystemColors.Control;
-            OriginalImage.Image = Properties.Resources.stock_photo_barcode_label_on_shipping_box_being_scanned_with_red_laser_device_390200806;
+            OriginalImage.Image = (Image)resources.GetObject("OriginalImage.Image");
             OriginalImage.Location = new Point(97, 12);
             OriginalImage.Name = "OriginalImage";
             OriginalImage.Size = new Size(516, 486);
@@ -88,7 +92,7 @@
             button1.TabIndex = 4;
             button1.Text = "Binarize image";
             button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            button1.Click += BinarizeButton;
             // 
             // button2
             // 
@@ -118,13 +122,35 @@
             button3.TabIndex = 7;
             button3.Text = "Do edge detection";
             button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            button3.Click += EdgeDetectButton;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(685, 612);
+            button4.Name = "button4";
+            button4.Size = new Size(129, 62);
+            button4.TabIndex = 8;
+            button4.Text = "Detect Barcode";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // BarcodeDetect
+            // 
+            BarcodeDetect.Location = new Point(940, 594);
+            BarcodeDetect.Name = "BarcodeDetect";
+            BarcodeDetect.Size = new Size(513, 455);
+            BarcodeDetect.SizeMode = PictureBoxSizeMode.StretchImage;
+            BarcodeDetect.TabIndex = 9;
+            BarcodeDetect.TabStop = false;
+            BarcodeDetect.Click += pictureBox1_Click_2;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1476, 1061);
+            Controls.Add(BarcodeDetect);
+            Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(EdgeMap);
             Controls.Add(button2);
@@ -135,9 +161,11 @@
             Controls.Add(OriginalImage);
             Name = "Form1";
             Text = "Form1";
+            Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)OriginalImage).EndInit();
             ((System.ComponentModel.ISupportInitialize)BinarizedImage).EndInit();
             ((System.ComponentModel.ISupportInitialize)EdgeMap).EndInit();
+            ((System.ComponentModel.ISupportInitialize)BarcodeDetect).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -152,5 +180,7 @@
         private Button button2;
         private PictureBox EdgeMap;
         private Button button3;
+        private Button button4;
+        private PictureBox BarcodeDetect;
     }
 }
