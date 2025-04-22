@@ -35,6 +35,7 @@ namespace ImageProcessingBinarization
 
                 }
             }
+            //Koden her er nestet noget mere end jeg normalt kan lide, men metoden er simpel nok til at det nok går
             return bitmap;
 
         }

@@ -69,7 +69,15 @@ namespace ImageProcessingBinarization
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            if (BinarizedImage.Image != null)
+            {
+                Form2 form2 = new Form2(BinarizedImage.Image);
+                form2.Show();
+            }
+            else
+            {
+                MessageBox.Show("No image to send. Please apply the Sobel filter first.");
+            }
         }
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
@@ -102,7 +110,17 @@ namespace ImageProcessingBinarization
 
             Image<Bgr, float> newImage = bitmap.ToImage<Bgr, float>();
             newImage = barcodeDetector.SobelFilter(newImage);
-            BarcodeDetect.Image = newImage.AsBitmap<Bgr, float>();
-        }   
+            SobelFilterImage.Image = newImage.AsBitmap<Bgr, float>();
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

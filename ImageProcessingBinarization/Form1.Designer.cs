@@ -38,11 +38,15 @@
             EdgeMap = new PictureBox();
             button3 = new Button();
             button4 = new Button();
-            BarcodeDetect = new PictureBox();
+            SobelFilterImage = new PictureBox();
+            fileSystemWatcher1 = new FileSystemWatcher();
+            label1 = new Label();
+            logBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)OriginalImage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)BinarizedImage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)EdgeMap).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)BarcodeDetect).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SobelFilterImage).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).BeginInit();
             SuspendLayout();
             // 
             // OriginalImage
@@ -100,13 +104,13 @@
             button2.Name = "button2";
             button2.Size = new Size(107, 23);
             button2.TabIndex = 5;
-            button2.Text = "Next Page -->";
+            button2.Text = "More options";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
             // EdgeMap
             // 
-            EdgeMap.Location = new Point(97, 594);
+            EdgeMap.Location = new Point(97, 549);
             EdgeMap.Name = "EdgeMap";
             EdgeMap.Size = new Size(516, 455);
             EdgeMap.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -134,22 +138,48 @@
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
-            // BarcodeDetect
+            // SobelFilterImage
             // 
-            BarcodeDetect.Location = new Point(940, 594);
-            BarcodeDetect.Name = "BarcodeDetect";
-            BarcodeDetect.Size = new Size(513, 455);
-            BarcodeDetect.SizeMode = PictureBoxSizeMode.StretchImage;
-            BarcodeDetect.TabIndex = 9;
-            BarcodeDetect.TabStop = false;
-            BarcodeDetect.Click += pictureBox1_Click_2;
+            SobelFilterImage.AccessibleDescription = "public";
+            SobelFilterImage.Location = new Point(940, 543);
+            SobelFilterImage.Name = "SobelFilterImage";
+            SobelFilterImage.Size = new Size(513, 455);
+            SobelFilterImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            SobelFilterImage.TabIndex = 9;
+            SobelFilterImage.TabStop = false;
+            SobelFilterImage.Click += pictureBox1_Click_2;
+            // 
+            // fileSystemWatcher1
+            // 
+            fileSystemWatcher1.EnableRaisingEvents = true;
+            fileSystemWatcher1.SynchronizingObject = this;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(734, 198);
+            label1.Name = "label1";
+            label1.Size = new Size(42, 15);
+            label1.TabIndex = 11;
+            label1.Text = "Debug";
+            label1.Click += label1_Click_1;
+            // 
+            // logBox
+            // 
+            logBox.Location = new Point(677, 229);
+            logBox.Name = "logBox";
+            logBox.Size = new Size(168, 23);
+            logBox.TabIndex = 10;
+            logBox.TextChanged += textBox3_TextChanged;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1476, 1061);
-            Controls.Add(BarcodeDetect);
+            ClientSize = new Size(1553, 1016);
+            Controls.Add(label1);
+            Controls.Add(logBox);
+            Controls.Add(SobelFilterImage);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(EdgeMap);
@@ -165,7 +195,8 @@
             ((System.ComponentModel.ISupportInitialize)OriginalImage).EndInit();
             ((System.ComponentModel.ISupportInitialize)BinarizedImage).EndInit();
             ((System.ComponentModel.ISupportInitialize)EdgeMap).EndInit();
-            ((System.ComponentModel.ISupportInitialize)BarcodeDetect).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SobelFilterImage).EndInit();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -181,6 +212,10 @@
         private PictureBox EdgeMap;
         private Button button3;
         private Button button4;
-        private PictureBox BarcodeDetect;
+        private FileSystemWatcher fileSystemWatcher1;
+        private Label label1;
+        private TextBox logBox;
+        public PictureBox SobelFilterImage;
+        public PictureBox SobelFilterImagePublic => SobelFilterImage;
     }
 }
